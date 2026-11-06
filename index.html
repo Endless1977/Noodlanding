@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Noodlanding</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<canvas id="cv"></canvas>
+<canvas id="ov"></canvas>
+<div id="vig"></div>
+<div id="hud" class="hidden">
+  <div id="hudTL">
+    <div id="hName"></div>
+    <div class="bar hp"><i id="bHp"></i><span id="tHp"></span></div>
+    <div class="bar sh"><i id="bSh"></i><span id="tSh"></span></div>
+    <div class="bar st"><i id="bSt"></i></div>
+    <div class="bar xp"><i id="bXp"></i><span id="tXp"></span></div>
+    <div id="hMats"></div>
+  </div>
+  <div id="hudTR">
+    <canvas id="mini" width="128" height="96"></canvas>
+    <div id="hChap"></div><div id="hObj"></div><div id="hParty"></div><div id="hCode"></div>
+    <button id="hCam" data-a="cam"></button>
+  </div>
+  <div id="hudB"><div id="hWeap"></div><div id="hAbil"></div></div>
+  <div id="hBoss" class="hidden"><div id="hBossName"></div><div class="bar boss"><i id="bBoss"></i></div><div class="bar armor"><i id="bArmor"></i></div></div>
+  <div id="hPrompt"></div>
+  <div id="hDown" class="hidden"></div>
+  <div id="hReplay" class="hidden">HERHALING — snapshot van dit hoofdstuk, voortgang wordt niet opgeslagen</div>
+</div>
+<div id="toasts"></div>
+<div id="menu" class="overlay"></div>
+<div id="panel" class="overlay hidden"></div>
+<script src="lib/three.min.js"></script>
+<script src="lib/peerjs.min.js"></script>
+<script src="js/util.js"></script>
+<script src="js/data.js"></script>
+<script src="js/sprites.js"></script>
+<script src="js/world.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/net.js"></script>
+<script src="js/sim.js"></script>
+<script src="js/game.js"></script>
+<script src="js/render3d.js"></script>
+<script src="js/decor.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

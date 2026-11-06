@@ -1,0 +1,205 @@
+'use strict';
+// ===== Pixel-art sprites (worden als billboards in 3D getoond) =====
+const SPRITE_DEFS={
+  astro:{px:15,pal:{W:'#e9edf3',S:'#a3adbb',V:'$c',D:'$d',L:'#ffffff',B:'#6d7685',b:'#4a5160',K:'#2e333c',A:'$c',G:'#ffcc33'},frames:[[
+".....WWWW.....",
+"...WWWWWWWW...",
+"..WWSSSSSSWW..",
+"..WSDVVVVVSW..",
+".bWSDVVVLVSW..",
+".bWSDDVVVVSW..",
+".bWWSDDDDSWW..",
+"bBBWWWWWWWWWS.",
+"bBBWWAAAWWWWS.",
+"bBBWWAGAWWWWS.",
+"bBBWWAAAWWWSS.",
+".bBWWWWWWWWS..",
+"..KWWWWWWWWK..",
+"..WSSKKKKSSW..",
+"..WWW....WWW..",
+"..WWS....WWS..",
+"..WWS....WWS..",
+".KKKK...KKKK.."],[
+".....WWWW.....",
+"...WWWWWWWW...",
+"..WWSSSSSSWW..",
+"..WSDVVVVVSW..",
+".bWSDVVVLVSW..",
+".bWSDDVVVVSW..",
+".bWWSDDDDSWW..",
+"bBBWWWWWWWWWS.",
+"bBBWWAAAWWWWS.",
+"bBBWWAGAWWWWS.",
+"bBBWWAAAWWWSS.",
+".bBWWWWWWWWS..",
+"..KWWWWWWWWK..",
+"..WSSKKKKSSW..",
+"..WWW...WWW...",
+".WWS.....WWS..",
+".WWS......WWS.",
+"KKKK......KKKK"]]},
+  crawler:{pal:{R:'#c0563a',r:'#7a2f1e',Y:'#ffe14d'},frames:[[
+"............",
+"...RRRRRR...",
+"..RRRRRRRR..",
+".RRRYRRYRRR.",
+".RRRRRRRRRR.",
+"..rrrrrrrr..",
+".r.r.r.r.r..",
+"r..r...r..r."],[
+"............",
+"...RRRRRR...",
+"..RRRRRRRR..",
+".RRRYRRYRRR.",
+".RRRRRRRRRR.",
+"..rrrrrrrr..",
+".r..r..r..r.",
+"..r.r.r..r.."]]},
+  spiker:{pal:{P:'#d8b13a',p:'#7a6220',Y:'#ff4040'},frames:[[
+"....P.....",
+".P.PPP.P..",
+"..PPPPP...",
+"PPPPYPPPP.",
+"..PPPPP...",
+".P.PPP.P..",
+"....P.....",
+"...ppp....",
+"..p...p...",
+".p.....p.."]]},
+  drone:{pal:{G:'#8b95a3',R:'#ff4040',g:'#5a626e'},frames:[[
+"G......G",
+"GGG..GGG",
+".GGRRGG.",
+".gGRRGg.",
+"..GGGG..",
+"...gg..."],[
+"........",
+"GGG..GGG",
+".GGRRGG.",
+".gGRRGg.",
+"..GGGG..",
+"...gg..."]]},
+  spitter:{pal:{G:'#2e7d32',L:'#7be36e',Y:'#e8ff4d',O:'#1b4d1e'},frames:[[
+"....GGGG....",
+"...GLLLLG...",
+"..GLLYYLLG..",
+"..GLLYYLLG..",
+"..GLLLLLLG..",
+"...GOOOOG...",
+"....GOOG....",
+"...GGGGGG...",
+"..G.G..G.G..",
+".G..G..G..G."]]},
+  vine:{pal:{G:'#2e6b28',L:'#8fe060',Y:'#ff4d6a'},frames:[[
+"........GG..",
+".GG....GLYG.",
+"GLLG..GLLLG.",
+"G..GLLLG....",
+"....GGG....."],[
+"........GG..",
+"..GG...GLYG.",
+".GLLG.GLLLG.",
+"GG..GLLG....",
+".....GG....."]]},
+  beetle:{pal:{K:'#2a1a14',O:'#ff6a1a',r:'#ffd24d',Y:'#ffffff'},frames:[[
+"....KKKKKK....",
+"..KKOOOOOOKK..",
+".KOOOOrrOOOOK.",
+"KOOOrrOOrrOOOK",
+"KOOOOOOOOOOOOK",
+".KOOOOrrOOOOK.",
+"..KKOOOOOOKKY.",
+"...K.K..K.KYY.",
+"..K..K..K..K.."]]},
+  wisp:{pal:{Y:'#fff27a',O:'#ff9a2a',W:'#ffffff',R:'#d8401a'},frames:[[
+"....YY....",
+"...YOOY...",
+"..YOOOOY..",
+".YOOWWOOY.",
+".OOOWWOOO.",
+".OORRRROO.",
+"..ORRRRO..",
+"..R.RR.R..",
+"...R..R..."],[
+"...Y..Y...",
+"...YOOY...",
+"..YOOOOY..",
+".YOOWWOOY.",
+".OOOWWOOO.",
+".OORRRROO.",
+"..ORRRRO..",
+"...RR.R...",
+"..R..R...."]]},
+  n_scrap:{pal:{G:'#9aa3ad',L:'#d6dde5',g:'#5c646e'},frames:[[
+"............",
+"......GG....",
+"....GGLGg...",
+"...GLGGGGg..",
+"..GGgGLGGG..",
+".GLGGGgGLGG.",
+"GGGgGGGGGgGG",
+"gggggggggggg"]]},
+  n_sili:{pal:{C:'#5fc8ff',L:'#d8f6ff',c:'#2a6a8a'},frames:[[
+".....C......",
+"....CLC..C..",
+"....CLC.CLC.",
+"..C.CLCCLLC.",
+".CLCCLCCLC..",
+".CLLCLCCLC..",
+"cCLCCLCCCcc.",
+"cccccccccc.."]]},
+  n_bio:{pal:{G:'#2e7d32',L:'#7be36e',Y:'#e8ff4d',o:'#1a3a1c'},frames:[[
+"...GGGG.....",
+"..GLLLLG....",
+".GLLYLLLG...",
+".GLLLLLLGGG.",
+".GLLLLLLGLLG",
+"..GLLLLGLLLG",
+"oooGGGGoGGGo",
+"oooooooooooo"]]},
+  n_magma:{pal:{K:'#2a1a14',O:'#ff6a1a',Y:'#ffd24d',k:'#120a08'},frames:[[
+"....KKK.....",
+"..KKOOKK....",
+".KOOYOOKKK..",
+"KOOYYOOKOOK.",
+"KOOOOOKOYOK.",
+".KKOOKKOOK..",
+"kkkKKkkKKkkk"]]},
+  crate:{pal:{B:'#8a6a3e',K:'#4a3520'},frames:[[
+"KKKKKKKKKK",
+"KBBBBBBBBK",
+"KBKBBBBKBK",
+"KBBKBBKBBK",
+"KBBBKKBBBK",
+"KBBBKKBBBK",
+"KBBKBBKBBK",
+"KBKBBBBKBK",
+"KBBBBBBBBK",
+"KKKKKKKKKK"]]},
+  fuse:{pal:{Y:'#ffe14d',K:'#555',W:'#fff'},frames:[[
+".KKK.",
+".YWY.",
+".YYY.",
+".YWY.",
+".YYY.",
+".KKK."]]}
+};
+function shade(hex,f){const n=parseInt(hex.slice(1),16);let r=n>>16,g=(n>>8)&255,b=n&255;r=clamp(Math.round(r*f),0,255);g=clamp(Math.round(g*f),0,255);b=clamp(Math.round(b*f),0,255);return '#'+((1<<24)|(r<<16)|(g<<8)|b).toString(16).slice(1)}
+function hexRGB(h){const n=parseInt(h.slice(1),16);return[n>>16,(n>>8)&255,n&255]}
+// Canvas met 1px marge; automatische belichting (licht van linksboven) en donkere outline
+function makeSpriteCanvas(name,frame,color,flip){
+  const def=SPRITE_DEFS[name];const rows=def.frames[Math.min(frame,def.frames.length-1)];
+  const w=Math.max(...rows.map(r=>r.length)),h=rows.length,W2=w+2,H2=h+2;
+  const px=new Array(W2*H2).fill(null);
+  for(let j=0;j<h;j++)for(let i=0;i<rows[j].length;i++){const ch=rows[j][i];let col=def.pal[ch];if(!col)continue;
+    if(col==='$c')col=color||'#ffcc33';else if(col==='$d')col=shade(color||'#ffcc33',0.55);
+    px[(1+j)*W2+1+(flip?w-1-i:i)]=col}
+  const at=(x,y)=>x<0||y<0||x>=W2||y>=H2?null:px[y*W2+x];
+  const c=document.createElement('canvas');c.width=W2;c.height=H2;const g=c.getContext('2d');const img=g.createImageData(W2,H2);const d=img.data;
+  for(let y=0;y<H2;y++)for(let x=0;x<W2;x++){const k=(y*W2+x)*4;const col=at(x,y);
+    if(col){let f=1;if(!at(x,y-1))f*=1.2;if(!at(x,y+1))f*=0.7;if(!at(flip?x+1:x-1,y))f*=1.08;if(!at(flip?x-1:x+1,y))f*=0.85;
+      if((x+y)%2===0&&at(x,y-1)&&at(x,y+1))f*=0.97;
+      const [r,gg,b]=hexRGB(col);d[k]=clamp(r*f,0,255);d[k+1]=clamp(gg*f,0,255);d[k+2]=clamp(b*f,0,255);d[k+3]=255}
+    else if(at(x-1,y)||at(x+1,y)||at(x,y-1)||at(x,y+1)){d[k]=10;d[k+1]=12;d[k+2]=20;d[k+3]=235}}
+  g.putImageData(img,0,0);return c;
+}
