@@ -85,7 +85,7 @@ const R3={
     for(let y=0;y<MH;y++)for(let x=0;x<MW;x++)if(MAP.t[y*MW+x]===T.WALL){const hh=1+R()*0.25;mtx.makeScale(1,hh,1);mtx.setPosition(x+0.5,H*hh/2,y+0.5);im.setMatrixAt(k++,mtx)}
     im.castShadow=true;im.receiveShadow=true;this.zone.add(im);
     // aankleding
-    const pr=DECOR.buildProps(this.zone,GAME.ch);this.vents=pr.vents;
+    this.pillars=[];const pr=DECOR.buildProps(this.zone,GAME.ch);this.vents=pr.vents;
     // poort (tempel met energieveld)
     this.gate=new THREE.Group();
     const gm=new THREE.MeshBasicMaterial({color:pal.acc,transparent:true,opacity:0.5,depthWrite:false});
@@ -358,7 +358,8 @@ const R3={
     if(CAM.mode==='top'){this.viewYaw=-Math.PI/2;pos=new THREE.Vector3(px,12*z,pz+6.5*z);look=new THREE.Vector3(px,0,pz-0.5);
       this.camPos.lerp(pos,k);this.camLook.lerp(look,k)}
     else if(CAM.mode==='third'){this.viewYaw=CAM.yaw;const cy=Math.cos(CAM.yaw),syw=Math.sin(CAM.yaw);const dist=4.2*z;
-      let back=dist;for(let s=0.3;s<=dist;s+=0.2){if(solidP((px-cy*s)/U,(pz-syw*s)/U)){back=Math.max(0.4,s-0.3);break}}
+      let back=dist;const pil=(this.pillars||[]).filter(q=>(q.x-px)**2+(q.z-pz)**2<(dist+1)**2);
+      for(let s=0.3;s<=dist;s+=0.2){const cx=px-cy*s,cz=pz-syw*s;if(solidP(cx/U,cz/U)||pil.some(q=>(q.x-cx)**2+(q.z-cz)**2<0.36)){back=Math.max(0.4,s-0.3);break}}
       const hgt=1.9+0.8*z-CAM.pitch*1.6;
       pos=new THREE.Vector3(px-cy*back+(-syw)*0.45,Math.max(0.5,hgt),pz-syw*back+cy*0.45);
       look=new THREE.Vector3(px+cy*4,0.9+CAM.pitch*3,pz+syw*4);this.camPos.lerp(pos,Math.min(1,dt*14));this.camLook.copy(look)}

@@ -117,7 +117,7 @@ const DECOR={
   ruins(group,ch){const zid=ZONES[ch].map||ch,pal=ZONES[zid].pal,R=mulberry32(ZONES[zid].seed+777);
     const stone=new THREE.MeshLambertMaterial({color:shade(pal.wallHi,1.35)}),glow=new THREE.MeshLambertMaterial({color:pal.acc,emissive:new THREE.Color(pal.acc),emissiveIntensity:1});
     const shafts=[],caps=[],bands=[],fallen=[];
-    const pillar=(x,z,h,broken)=>{shafts.push(this.mtx(x,h/2,z,R()*TAU,0.28,h,0.28));bands.push(this.mtx(x,h*0.55,z,0,0.31,0.08,0.31));
+    const pillar=(x,z,h,broken)=>{R3.pillars.push({x,z});shafts.push(this.mtx(x,h/2,z,R()*TAU,0.28,h,0.28));bands.push(this.mtx(x,h*0.55,z,0,0.31,0.08,0.31));
       if(!broken)caps.push(this.mtx(x,h+0.12,z,0,0.5,0.24,0.5));else fallen.push(this.mtx(x+0.9,0.2,z+0.3,R()*TAU,0.26,1.4,0.26,Math.PI/2,0))};
     const P=MAP.rooms.puzzle;
     for(const [dx,dy] of [[-7,-5],[7,-5],[-7,5],[7,5],[-3,-5.5],[3,-5.5]])if(tileAt(Math.floor(P.x+dx),Math.floor(P.y+dy))!==T.WALL)pillar(P.x+dx+0.5,P.y+dy+0.5,2+R()*1.2,R()<0.3);
